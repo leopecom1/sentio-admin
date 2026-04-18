@@ -12,6 +12,7 @@ import { AssessmentsPage } from './pages/AssessmentsPage';
 import { LegalDocsPage } from './pages/LegalDocsPage';
 import { AboutPage } from './pages/AboutPage';
 import { ValidationsPage } from './pages/ValidationsPage';
+import { ApprovalsPage } from './pages/ApprovalsPage';
 import { LoginPage } from './pages/LoginPage';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/legal" element={<LegalDocsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/validations" element={<ValidationsPage />} />
+          <Route path="/approvals" element={<ApprovalsPage />} />
           <Route path="/conversations" element={<ConversationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>

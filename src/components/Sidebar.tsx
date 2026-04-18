@@ -13,10 +13,12 @@ import {
   Scale,
   Info,
   ShieldCheck,
+  UserCheck,
 } from 'lucide-react';
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/approvals', icon: UserCheck, label: 'Aprobar cuentas' },
   { to: '/users', icon: Users, label: 'Usuarios' },
   { to: '/analytics', icon: BarChart3, label: 'Analíticas' },
   { to: '/content', icon: FileText, label: 'Contenido' },
