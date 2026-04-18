@@ -11,6 +11,7 @@ import { WhitelistPage } from './pages/WhitelistPage';
 import { AssessmentsPage } from './pages/AssessmentsPage';
 import { LegalDocsPage } from './pages/LegalDocsPage';
 import { AboutPage } from './pages/AboutPage';
+import { ValidationsPage } from './pages/ValidationsPage';
 import { LoginPage } from './pages/LoginPage';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/assessments" element={<AssessmentsPage />} />
           <Route path="/legal" element={<LegalDocsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/validations" element={<ValidationsPage />} />
           <Route path="/conversations" element={<ConversationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
