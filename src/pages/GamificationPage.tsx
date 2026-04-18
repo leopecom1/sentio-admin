@@ -15,7 +15,6 @@ import {
   useAchievements,
   type PointRule,
   type GamificationLevel,
-  type GamificationAchievement,
 } from '../hooks/useGamificationData';
 
 type Tab = 'rules' | 'levels' | 'achievements';
