@@ -11,6 +11,7 @@ import {
   Mail,
   ClipboardList,
   Scale,
+  Info,
 } from 'lucide-react';
 
 const navItems = [
@@ -22,6 +23,7 @@ const navItems = [
   { to: '/whitelist', icon: Mail, label: 'Whitelist' },
   { to: '/assessments', icon: ClipboardList, label: 'Evaluaciones' },
   { to: '/legal', icon: Scale, label: 'Legal' },
+  { to: '/about', icon: Info, label: 'Sobre B2Better' },
   { to: '/conversations', icon: MessageSquare, label: 'Conversaciones' },
   { to: '/settings', icon: Settings, label: 'Configuración' },
 ];
