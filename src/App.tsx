@@ -9,6 +9,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { GamificationPage } from './pages/GamificationPage';
 import { WhitelistPage } from './pages/WhitelistPage';
 import { AssessmentsPage } from './pages/AssessmentsPage';
+import { LegalDocsPage } from './pages/LegalDocsPage';
 import { LoginPage } from './pages/LoginPage';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/gamification" element={<GamificationPage />} />
           <Route path="/whitelist" element={<WhitelistPage />} />
           <Route path="/assessments" element={<AssessmentsPage />} />
+          <Route path="/legal" element={<LegalDocsPage />} />
           <Route path="/conversations" element={<ConversationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>

@@ -10,6 +10,7 @@ import {
   Trophy,
   Mail,
   ClipboardList,
+  Scale,
 } from 'lucide-react';
 
 const navItems = [
@@ -20,6 +21,7 @@ const navItems = [
   { to: '/gamification', icon: Trophy, label: 'Gamificación' },
   { to: '/whitelist', icon: Mail, label: 'Whitelist' },
   { to: '/assessments', icon: ClipboardList, label: 'Evaluaciones' },
+  { to: '/legal', icon: Scale, label: 'Legal' },
   { to: '/conversations', icon: MessageSquare, label: 'Conversaciones' },
   { to: '/settings', icon: Settings, label: 'Configuración' },
 ];
