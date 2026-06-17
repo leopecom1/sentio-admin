@@ -28,7 +28,7 @@ export function UsersPage() {
     <div className="max-w-7xl">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-text-primary">Usuarios</h1>
-        <p className="text-text-secondary mt-1">Gestión y monitoreo de usuarios de Sentio</p>
+        <p className="text-text-secondary mt-1">Gestión y monitoreo de usuarios de B2Better</p>
       </div>
 
       {/* Filters */}

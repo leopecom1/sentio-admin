@@ -1,35 +1,39 @@
 @import "tailwindcss";
 
+/* Paleta alineada a la marca B2Better (landing + app): negro neutro,
+   azul #3030FF y cian #00FFBD. */
 @theme {
-  --color-primary: #4040FB;
-  --color-primary-light: #6060FF;
+  --color-primary: #3030FF;
+  --color-primary-light: #6E6EFF;
   --color-secondary: #C9A96E;
   --color-accent: #00FFBD;
-  --color-background: #0A0A0C;
-  --color-surface: #1A1A2E;
-  --color-card: #22222E;
-  --color-error: #E05252;
-  --color-warning: #D4A574;
-  --color-text-primary: #F5F5F0;
-  --color-text-secondary: #9CA3AF;
-  --color-text-tertiary: #6B7280;
-  --color-border: #2E2E3A;
-  --color-sidebar: #0A0A0C;
-  --color-sidebar-hover: #1A1A2E;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  src: local('DM Sans');
+  --color-background: #0A0A0B;
+  --color-surface: #111114;
+  --color-card: #18181B;
+  --color-error: #FF4A5A;
+  --color-warning: #FFB400;
+  --color-text-primary: #F0F0F0;
+  --color-text-secondary: #9999A1;
+  --color-text-tertiary: #5C5C66;
+  --color-border: #232328;
+  --color-sidebar: #0A0A0B;
+  --color-sidebar-hover: #18181B;
 }
 
 body {
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
   background-color: var(--color-background);
   color: var(--color-text-primary);
   margin: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
   box-sizing: border-box;
 }
+
+/* Scrollbar sutil acorde al tema oscuro */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2A2A30; border-radius: 8px; border: 2px solid var(--color-background); }
+::-webkit-scrollbar-thumb:hover { background: #3A3A42; }

@@ -36,7 +36,7 @@ export function Dashboard() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-text-primary">Dashboard</h1>
-        <p className="text-text-secondary mt-1">Resumen de actividad de Sentio</p>
+        <p className="text-text-secondary mt-1">Resumen de actividad de B2Better</p>
       </div>
 
       {/* Stats Grid */}
