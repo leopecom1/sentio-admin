@@ -14,6 +14,7 @@ import { AboutPage } from './pages/AboutPage';
 import { ValidationsPage } from './pages/ValidationsPage';
 import { ApprovalsPage } from './pages/ApprovalsPage';
 import { EmailTestsPage } from './pages/EmailTestsPage';
+import { WikiPage } from './pages/WikiPage';
 import { LoginPage } from './pages/LoginPage';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/approvals" element={<ApprovalsPage />} />
           <Route path="/email-tests" element={<EmailTestsPage />} />
           <Route path="/conversations" element={<ConversationsPage />} />
+          <Route path="/wiki" element={<WikiPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>

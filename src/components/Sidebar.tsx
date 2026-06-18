@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   UserCheck,
   Send,
+  BookOpen,
 } from 'lucide-react';
 
 const navItems = [
@@ -30,6 +31,7 @@ const navItems = [
   { to: '/legal', icon: Scale, label: 'Legal' },
   { to: '/about', icon: Info, label: 'Sobre B2Better' },
   { to: '/conversations', icon: MessageSquare, label: 'Conversaciones' },
+  { to: '/wiki', icon: BookOpen, label: 'Base de conocimiento' },
   { to: '/email-tests', icon: Send, label: 'Pruebas de email' },
   { to: '/settings', icon: Settings, label: 'Configuración' },
 ];

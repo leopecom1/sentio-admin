@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  Save, Bell, Shield, Smartphone, RefreshCw,
+  Save, Bell, Sparkles, Smartphone, RefreshCw, BookOpen,
   Loader2, CheckCircle2, AlertCircle,
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -10,15 +11,19 @@ const CONFIG_KEYS = [
   'android_store_url',
   'min_ios_version',
   'min_android_version',
+  'ai_system_prompt',
+  'ai_model',
+  'ai_temperature',
 ] as const;
 
 type ConfigKey = (typeof CONFIG_KEYS)[number];
 
+const AI_MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-4.1-mini', 'gpt-4.1'];
+
 /**
- * Configuración de la app (tabla `app_config`):
- *  - Links de las tiendas (los usa la landing y la pantalla de actualización).
- *  - Versiones mínimas del "forced update": subir el número fuerza a actualizar
- *    a todos los que tengan una versión menor.
+ * Configuración de la app (tabla `app_config`): links de tienda, force update
+ * y ajustes del asistente IA (personalidad, modelo, temperatura). Todo editable
+ * sin redeploy — la app y la landing lo leen al instante.
  */
 function AppConfigSection() {
   const [values, setValues] = useState<Record<string, string>>({});
@@ -57,7 +62,7 @@ function AppConfigSection() {
     }));
     const { error } = await supabase.from('app_config').upsert(rows, { onConflict: 'key' });
     if (error) setStatus({ type: 'error', msg: error.message });
-    else setStatus({ type: 'ok', msg: 'Cambios guardados. La landing y la app los toman al instante.' });
+    else setStatus({ type: 'ok', msg: 'Cambios guardados. La app y la landing los toman al instante.' });
     setSaving(false);
   };
 
@@ -121,6 +126,72 @@ function AppConfigSection() {
         </p>
       </section>
 
+      {/* Asistente IA */}
+      <section className="bg-surface rounded-2xl p-6 shadow-sm border border-border/50 mb-6">
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <h3 className="text-lg font-semibold">Asistente IA</h3>
+          </div>
+          <Link
+            to="/wiki"
+            className="flex items-center gap-1.5 text-xs font-medium text-accent hover:underline"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            Base de conocimiento →
+          </Link>
+        </div>
+        <p className="text-xs text-text-tertiary mb-4">
+          Personalidad y parámetros del asistente del chat. Se aplican sin redeploy.
+        </p>
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-medium">Personalidad (system prompt)</label>
+            <textarea
+              value={values['ai_system_prompt'] ?? ''}
+              onChange={(e) => set('ai_system_prompt', e.target.value)}
+              disabled={loading}
+              rows={10}
+              placeholder="Cómo se comporta el asistente..."
+              className="mt-2 w-full px-4 py-2.5 bg-card border border-border rounded-xl text-sm text-text-primary leading-relaxed focus:outline-none focus:border-primary disabled:opacity-50 resize-y"
+            />
+            <p className="text-xs text-text-tertiary mt-1">
+              Definí tono, estilo y límites. La app le suma el contexto del usuario y la base de conocimiento.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-medium">Modelo</label>
+              <select
+                value={values['ai_model'] || 'gpt-4o-mini'}
+                onChange={(e) => set('ai_model', e.target.value)}
+                disabled={loading}
+                className="mt-2 w-full px-4 py-2.5 bg-card border border-border rounded-xl text-sm text-text-primary focus:outline-none focus:border-primary disabled:opacity-50"
+              >
+                {AI_MODELS.map((m) => (
+                  <option key={m} value={m}>{m}</option>
+                ))}
+              </select>
+              <p className="text-xs text-text-tertiary mt-1">gpt-4o es más capaz; mini es más barato/rápido.</p>
+            </div>
+            <div>
+              <label className="text-sm font-medium">Temperatura</label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max="1.5"
+                value={values['ai_temperature'] ?? '0.7'}
+                onChange={(e) => set('ai_temperature', e.target.value)}
+                disabled={loading}
+                className="mt-2 w-full px-4 py-2.5 bg-card border border-border rounded-xl text-sm text-text-primary focus:outline-none focus:border-primary disabled:opacity-50"
+              />
+              <p className="text-xs text-text-tertiary mt-1">Más alta = más creativa; más baja = más enfocada (0.5–0.8).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Estado + guardar */}
       <div className="flex items-center gap-4 mb-8">
         <button
@@ -158,7 +229,6 @@ export function SettingsPage() {
         <p className="text-text-secondary mt-1">Ajustes de la app y la plataforma</p>
       </div>
 
-      {/* Config real (tiendas + force update) */}
       <AppConfigSection />
 
       {/* Notifications (placeholder visual) */}
@@ -188,22 +258,6 @@ export function SettingsPage() {
               <div className="w-11 h-6 bg-card peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
             </label>
           </div>
-        </div>
-      </section>
-
-      {/* AI Configuration (placeholder visual) */}
-      <section className="bg-surface rounded-2xl p-6 shadow-sm border border-border/50 mb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <Shield className="w-5 h-5 text-primary" />
-          <h3 className="text-lg font-semibold">Asistente IA</h3>
-        </div>
-        <div>
-          <label className="text-sm font-medium">Tono del asistente</label>
-          <select className="mt-2 w-full px-4 py-2.5 bg-card border border-border rounded-xl text-sm focus:outline-none focus:border-primary">
-            <option>Cálido y empático (recomendado)</option>
-            <option>Directo y profesional</option>
-            <option>Suave y gentil</option>
-          </select>
         </div>
       </section>
     </div>
