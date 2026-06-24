@@ -16,6 +16,7 @@ import {
   UserCheck,
   Send,
   BookOpen,
+  Bell,
 } from 'lucide-react';
 
 const navItems = [
@@ -32,6 +33,7 @@ const navItems = [
   { to: '/about', icon: Info, label: 'Sobre B2Better' },
   { to: '/conversations', icon: MessageSquare, label: 'Conversaciones' },
   { to: '/wiki', icon: BookOpen, label: 'Base de conocimiento' },
+  { to: '/notifications', icon: Bell, label: 'Notificaciones' },
   { to: '/email-tests', icon: Send, label: 'Pruebas de email' },
   { to: '/settings', icon: Settings, label: 'Configuración' },
 ];
