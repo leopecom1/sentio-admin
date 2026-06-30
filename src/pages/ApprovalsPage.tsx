@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { CheckCircle2, Clock, Mail, UserX, Users } from 'lucide-react';
+import { CheckCircle2, Clock, Mail, UserX, Users, ShieldCheck, DoorOpen } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 type Filter = 'pending' | 'approved';
@@ -20,6 +20,24 @@ export function ApprovalsPage() {
   const [loading, setLoading] = useState(true);
   const [counts, setCounts] = useState<{ pending: number; approved: number }>({ pending: 0, approved: 0 });
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [requireApproval, setRequireApproval] = useState<boolean | null>(null);
+  const [savingFlag, setSavingFlag] = useState(false);
+
+  const loadFlag = useCallback(async () => {
+    const { data } = await supabase
+      .from('app_config').select('value').eq('key', 'require_account_approval').maybeSingle();
+    setRequireApproval((data?.value ?? 'false') === 'true');
+  }, []);
+
+  const toggleFlag = async () => {
+    const next = !requireApproval;
+    setSavingFlag(true);
+    const { error } = await supabase
+      .from('app_config')
+      .upsert({ key: 'require_account_approval', value: next ? 'true' : 'false', updated_at: new Date().toISOString() }, { onConflict: 'key' });
+    setSavingFlag(false);
+    if (!error) setRequireApproval(next);
+  };
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -41,6 +59,7 @@ export function ApprovalsPage() {
   }, [filter]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { loadFlag(); }, [loadFlag]);
 
   const approve = async (id: string) => {
     setSavingId(id);
@@ -74,9 +93,34 @@ export function ApprovalsPage() {
         <div>
           <h1 className="text-2xl font-bold text-text-primary">Aprobación de cuentas</h1>
           <p className="text-text-secondary mt-1">
-            Los usuarios que se registran quedan pendientes hasta que los aprobés manualmente.
+            {requireApproval
+              ? 'Las cuentas nuevas quedan pendientes hasta que las aprobés manualmente.'
+              : 'El registro está abierto: las cuentas nuevas entran directo, sin aprobación.'}
           </p>
         </div>
+      </div>
+
+      {/* Interruptor: exigir aprobación */}
+      <div className="bg-surface rounded-2xl p-5 border border-border/50 mb-6 flex items-center gap-4">
+        <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${requireApproval ? 'bg-warning/15 text-warning' : 'bg-accent/15 text-accent'}`}>
+          {requireApproval ? <ShieldCheck className="w-5 h-5" /> : <DoorOpen className="w-5 h-5" />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-bold text-text-primary">Requerir aprobación manual</p>
+          <p className="text-xs text-text-secondary mt-0.5">
+            {requireApproval
+              ? 'Activado: cada cuenta nueva necesita tu visto bueno para entrar.'
+              : 'Desactivado: cualquiera que se registre puede usar la app al instante.'}
+          </p>
+        </div>
+        <button
+          onClick={toggleFlag}
+          disabled={savingFlag || requireApproval === null}
+          aria-label="Requerir aprobación"
+          className={`relative w-12 h-7 rounded-full transition-colors shrink-0 disabled:opacity-50 ${requireApproval ? 'bg-warning' : 'bg-border'}`}
+        >
+          <span className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-white transition-transform ${requireApproval ? 'translate-x-5' : ''}`} />
+        </button>
       </div>
 
       <div className="flex gap-1 bg-card p-1 rounded-xl mb-6 w-fit">
