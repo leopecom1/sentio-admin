@@ -17,6 +17,7 @@ import {
   Send,
   BookOpen,
   Bell,
+  Megaphone,
 } from 'lucide-react';
 
 const navItems = [
@@ -34,6 +35,7 @@ const navItems = [
   { to: '/conversations', icon: MessageSquare, label: 'Conversaciones' },
   { to: '/wiki', icon: BookOpen, label: 'Base de conocimiento' },
   { to: '/notifications', icon: Bell, label: 'Notificaciones' },
+  { to: '/email-marketing', icon: Megaphone, label: 'Email Marketing' },
   { to: '/email-tests', icon: Send, label: 'Pruebas de email' },
   { to: '/settings', icon: Settings, label: 'Configuración' },
 ];

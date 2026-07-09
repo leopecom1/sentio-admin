@@ -16,11 +16,18 @@ import { ApprovalsPage } from './pages/ApprovalsPage';
 import { EmailTestsPage } from './pages/EmailTestsPage';
 import { WikiPage } from './pages/WikiPage';
 import { NotificationsPage } from './pages/NotificationsPage';
+import { EmailMarketingPage } from './pages/EmailMarketingPage';
+import { UnsubscribePage } from './pages/UnsubscribePage';
 import { LoginPage } from './pages/LoginPage';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
 export default function App() {
   const { isAdmin, loading, error, signIn, signOut } = useAdminAuth();
+
+  // Ruta pública de baja de emails (sin login) — antes de cualquier gate.
+  if (window.location.pathname.startsWith('/u/')) {
+    return <UnsubscribePage />;
+  }
 
   if (loading) {
     return (
@@ -53,6 +60,7 @@ export default function App() {
           <Route path="/conversations" element={<ConversationsPage />} />
           <Route path="/wiki" element={<WikiPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/email-marketing" element={<EmailMarketingPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>
