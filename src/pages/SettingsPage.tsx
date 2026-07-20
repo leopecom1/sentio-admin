@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Save, Bell, Sparkles, Smartphone, RefreshCw, BookOpen,
-  Loader2, CheckCircle2, AlertCircle,
+  Loader2, CheckCircle2, AlertCircle, Mic,
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -14,6 +14,7 @@ const CONFIG_KEYS = [
   'ai_system_prompt',
   'ai_model',
   'ai_temperature',
+  'voice_note_max_seconds',
 ] as const;
 
 type ConfigKey = (typeof CONFIG_KEYS)[number];
@@ -190,6 +191,24 @@ function AppConfigSection() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Notas de voz */}
+      <section className="bg-surface rounded-2xl p-6 shadow-sm border border-border/50 mb-6">
+        <div className="flex items-center gap-3 mb-1">
+          <Mic className="w-5 h-5 text-primary" />
+          <h3 className="text-lg font-semibold">Notas de voz</h3>
+        </div>
+        <p className="text-xs text-text-tertiary mb-4">
+          Duración máxima (en segundos) de las notas de voz del diario. Rige para todos los usuarios.
+        </p>
+        <div className="max-w-[200px]">
+          <label className="text-sm font-medium">Duración máxima (segundos)</label>
+          {input('voice_note_max_seconds', '180')}
+        </div>
+        <p className="text-xs text-text-tertiary mt-3">
+          Ej. <code className="text-accent">180</code> = 3 minutos. La app lo aplica al grabar.
+        </p>
       </section>
 
       {/* Estado + guardar */}
