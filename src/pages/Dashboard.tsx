@@ -23,6 +23,7 @@ import {
   Line,
 } from 'recharts';
 import { useDashboardStats, useAnalytics, useUsers } from '../hooks/useSupabaseData';
+import { UsageMetrics } from '../components/UsageMetrics';
 
 export function Dashboard() {
   const stats = useDashboardStats();
@@ -235,6 +236,9 @@ export function Dashboard() {
           </p>
         </div>
       </div>
+
+      {/* Panel de uso (#7) */}
+      <UsageMetrics />
     </div>
   );
 }
